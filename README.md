@@ -1,8 +1,8 @@
-# Welcome to your Lovable project
+# SRL VoiceBot
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+**URL**: https://________________
 
 ## How can I edit this code?
 
