@@ -1,0 +1,13 @@
+project_id = "ovtgobzyddwjvcidsebe"
+
+[functions.trigger-calls]
+verify_jwt = false
+
+[functions.subverse-webhook]
+verify_jwt = false
+
+[functions.stop-call]
+verify_jwt = false
+
+[functions.fetch-transcript]
+verify_jwt = false
