@@ -1,73 +1,198 @@
 # SRL VoiceBot
 
 ## Project info
+### Dispatch Automation Platform
+### 📌 Project Overview
+The Dispatch Automation Platform is a scalable outbound call automation system built to manage and monitor driver communication workflows efficiently.
+It enables operations teams to:
 
-**URL**: https://________________
+Upload driver data via CSV/XLSX
 
-## How can I edit this code?
+Automatically trigger AI-powered outbound calls
 
-There are several ways of editing your application.
+Track real-time call progress
 
-**Use Lovable**
+Handle retry logic for unanswered calls
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+Capture transcripts and recordings
 
-Changes made via Lovable will be committed automatically to this repo.
+Maintain structured call history and analytics
 
-**Use your preferred IDE**
+The system is designed for reliability, controlled retries, and operational transparency.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+🎯 Client Objective
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+The primary objective of this platform is to streamline operational communication between the control tower and drivers.
 
-Follow these steps:
+Key goals:
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+Ensure all drivers receive important updates
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+Reduce manual calling workload
 
-# Step 3: Install the necessary dependencies.
-npm i
+Automatically retry unanswered calls
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+Maintain an auditable communication trail
 
-**Edit a file directly in GitHub**
+Provide real-time visibility into call progress
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Ensure high delivery completion rate
 
-**Use GitHub Codespaces**
+🏗 System Architecture
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+The system consists of:
 
-## What technologies are used for this project?
+1️⃣ Frontend Application
 
-This project is built with:
+Batch upload (CSV/XLSX)
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Dataset management
 
-## How can I deploy this project?
+Live call status dashboard
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+Retry configuration controls
 
-## Can I connect a custom domain to my Lovable project?
+Realtime updates
 
-Yes, you can!
+2️⃣ Backend (Supabase Edge Functions)
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+Call dispatch orchestration
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Webhook event processing
+
+Retry scheduling
+
+Dataset completion tracking
+
+Call lifecycle management
+
+3️⃣ Call Provider Integration
+
+Outbound call triggering via API
+
+Event-based webhook callbacks
+
+Transcript and recording capture
+
+🔄 Call Lifecycle
+
+Each call follows a structured state machine:
+
+Event	Resulting Status
+Call triggered	ringing
+Call initiated	active
+Call completed	completed
+No response within timeout	queued (retry scheduled)
+Max retries exceeded	failed
+
+Retries occur after a defined delay if no completion event is received.
+
+📂 Data Flow
+
+CSV/XLSX uploaded
+
+Rows parsed into structured call records
+
+Records inserted into database
+
+Dispatcher claims next queued call
+
+Call API triggered
+
+Webhook updates status
+
+Dataset auto-completes when all calls reach terminal state
+
+🔁 Retry Logic
+
+Configurable maximum attempts
+
+Configurable retry delay
+
+Backstop timeout protection for stuck calls
+
+Idempotent status transitions
+
+No duplicate dispatching
+
+📊 Data Retention
+
+The system maintains:
+
+Call status history
+
+Attempt count
+
+Error messages
+
+Transcripts
+
+Recording URLs
+
+Dataset summary metrics
+
+Minimum retention: 30 days
+
+🔐 Security Measures
+
+Server-to-server webhook authentication
+
+Edge function access control
+
+Origin validation
+
+Terminal state protection (no status override once completed/failed)
+
+Controlled dataset-level concurrency
+
+🚀 Deployment Environment
+
+Supabase (Database + Edge Functions)
+
+AI Call Provider API
+
+Realtime subscriptions
+
+Secure environment variable configuration
+
+📈 Scalability
+
+The platform supports:
+
+Large batch uploads
+
+Parallel dataset processing
+
+Controlled sequential dispatch (if required)
+
+Multi-attempt retry strategies
+
+High observability via logs and real-time updates
+
+🧪 Testing & Validation
+
+The system has been validated for:
+
+Successful call completion detection
+
+Retry behavior on unanswered calls
+
+Accurate dataset completion detection
+
+Prevention of duplicate dispatch
+
+Accurate transcript and recording storage
+
+📞 Support & Maintenance
+
+The platform includes:
+
+Structured logging
+
+Event-level debugging
+
+Controlled retry behavior
+
+Dataset-level analytics
+
+Failure classification
