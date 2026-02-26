@@ -1,198 +1,168 @@
-# SRL VoiceBot
+# SRL VoiceBot - Dispatch Automation Platform
 
-## Project info
-### Dispatch Automation Platform
-### 📌 Project Overview
+## 📌 Project Overview
+
 The Dispatch Automation Platform is a scalable outbound call automation system built to manage and monitor driver communication workflows efficiently.
-It enables operations teams to:
 
-Upload driver data via CSV/XLSX
-
-Automatically trigger AI-powered outbound calls
-
-Track real-time call progress
-
-Handle retry logic for unanswered calls
-
-Capture transcripts and recordings
-
-Maintain structured call history and analytics
+- It enables operations teams to:
+- Upload driver data via CSV/XLSX
+- Automatically trigger AI-powered outbound calls
+- Track real-time call progress
+- Handle retry logic for unanswered calls
+- Capture transcripts and recordings
+- Maintain structured call history and analytics
 
 The system is designed for reliability, controlled retries, and operational transparency.
 
-🎯 Client Objective
+---
+
+## 🎯 Client Objective
 
 The primary objective of this platform is to streamline operational communication between the control tower and drivers.
 
-Key goals:
+### Key goals:
 
-Ensure all drivers receive important updates
+- Ensure all drivers receive important updates
+- Reduce manual calling workload
+- Automatically retry unanswered calls
+- Maintain an auditable communication trail
+- Provide real-time visibility into call progress
+- Ensure high delivery completion rate
 
-Reduce manual calling workload
+---
 
-Automatically retry unanswered calls
-
-Maintain an auditable communication trail
-
-Provide real-time visibility into call progress
-
-Ensure high delivery completion rate
-
-🏗 System Architecture
+## 🏗 System Architecture
 
 The system consists of:
 
-1️⃣ Frontend Application
+### 1️⃣ Frontend Application
 
-Batch upload (CSV/XLSX)
+- Batch upload (CSV/XLSX)
+- Dataset management
+- Live call status dashboard
+- Retry configuration controls
+- Realtime updates
 
-Dataset management
+### 2️⃣ Backend (Supabase Edge Functions)
 
-Live call status dashboard
+- Call dispatch orchestration
+- Webhook event processing
+- Retry scheduling
+- Dataset completion tracking
+- Call lifecycle management
 
-Retry configuration controls
+### 3️⃣ Call Provider Integration
 
-Realtime updates
+- Outbound call triggering via API
+- Event-based webhook callbacks
+- Transcript and recording capture
 
-2️⃣ Backend (Supabase Edge Functions)
+---
 
-Call dispatch orchestration
-
-Webhook event processing
-
-Retry scheduling
-
-Dataset completion tracking
-
-Call lifecycle management
-
-3️⃣ Call Provider Integration
-
-Outbound call triggering via API
-
-Event-based webhook callbacks
-
-Transcript and recording capture
-
-🔄 Call Lifecycle
+## 🔄 Call Lifecycle
 
 Each call follows a structured state machine:
 
-Event	Resulting Status
-Call triggered	ringing
-Call initiated	active
-Call completed	completed
-No response within timeout	queued (retry scheduled)
-Max retries exceeded	failed
+### Event → Resulting Status
+
+- Call triggered → ringing
+- Call initiated → active
+- Call completed → completed
+- No response within timeout → queued (retry scheduled)
+- Max retries exceeded → failed
 
 Retries occur after a defined delay if no completion event is received.
 
-📂 Data Flow
+---
 
-CSV/XLSX uploaded
+## 📂 Data Flow
 
-Rows parsed into structured call records
+### Flow Steps
 
-Records inserted into database
+1. CSV/XLSX uploaded  
+2. Rows parsed into structured call records  
+3. Records inserted into database  
+4. Dispatcher claims next queued call  
+5. Call API triggered  
+6. Webhook updates status  
+7. Dataset auto-completes when all calls reach terminal state  
 
-Dispatcher claims next queued call
+---
 
-Call API triggered
+## 🔁 Retry Logic
 
-Webhook updates status
+- Configurable maximum attempts
+- Configurable retry delay
+- Backstop timeout protection for stuck calls
+- Idempotent status transitions
+- No duplicate dispatching
 
-Dataset auto-completes when all calls reach terminal state
+---
 
-🔁 Retry Logic
+## 📊 Data Retention
 
-Configurable maximum attempts
+### The system maintains:
 
-Configurable retry delay
+- Call status history
+- Attempt count
+- Error messages
+- Transcripts
+- Recording URLs
+- Dataset summary metrics
 
-Backstop timeout protection for stuck calls
+**Minimum retention:** 30 days
 
-Idempotent status transitions
+---
 
-No duplicate dispatching
+## 🔐 Security Measures
 
-📊 Data Retention
+- Server-to-server webhook authentication
+- Edge function access control
+- Origin validation
+- Terminal state protection (no status override once completed/failed)
+- Controlled dataset-level concurrency
 
-The system maintains:
+---
 
-Call status history
+## 🚀 Deployment Environment
 
-Attempt count
+- Supabase (Database + Edge Functions)
+- AI Call Provider API
+- Realtime subscriptions
+- Secure environment variable configuration
 
-Error messages
+---
 
-Transcripts
-
-Recording URLs
-
-Dataset summary metrics
-
-Minimum retention: 30 days
-
-🔐 Security Measures
-
-Server-to-server webhook authentication
-
-Edge function access control
-
-Origin validation
-
-Terminal state protection (no status override once completed/failed)
-
-Controlled dataset-level concurrency
-
-🚀 Deployment Environment
-
-Supabase (Database + Edge Functions)
-
-AI Call Provider API
-
-Realtime subscriptions
-
-Secure environment variable configuration
-
-📈 Scalability
+## 📈 Scalability
 
 The platform supports:
 
-Large batch uploads
+- Large batch uploads
+- Parallel dataset processing
+- Controlled sequential dispatch (if required)
+- Multi-attempt retry strategies
+- High observability via logs and real-time updates
 
-Parallel dataset processing
+---
 
-Controlled sequential dispatch (if required)
-
-Multi-attempt retry strategies
-
-High observability via logs and real-time updates
-
-🧪 Testing & Validation
+## 🧪 Testing & Validation
 
 The system has been validated for:
 
-Successful call completion detection
+- Successful call completion detection
+- Retry behavior on unanswered calls
+- Accurate dataset completion detection
+- Prevention of duplicate dispatch
+- Accurate transcript and recording storage
 
-Retry behavior on unanswered calls
+---
 
-Accurate dataset completion detection
-
-Prevention of duplicate dispatch
-
-Accurate transcript and recording storage
-
-📞 Support & Maintenance
+## 📞 Support & Maintenance
 
 The platform includes:
 
-Structured logging
-
-Event-level debugging
-
-Controlled retry behavior
-
-Dataset-level analytics
-
-Failure classification
+- Structured logging
+- Event-level debugging
+- Controlled retry behavior
+- Dataset-level analytics
+- Failure classification
